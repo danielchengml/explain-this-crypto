@@ -17,10 +17,11 @@ namespace ExplainThisCrypto.Models
         public virtual ApplicationUser User { get; set; }
         public virtual Coin Coins { get; set; }
 
-        public Description(string content, string author)
+        public Description(string content, string author, int CoinId, ContributorId)
         {
             Content = content;
             Author = author;
+
         }
 
         public Description()

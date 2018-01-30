@@ -28,5 +28,6 @@ namespace ExplainThisCrypto.Models
         public Coin()
         {
         }
+
     }
 }
