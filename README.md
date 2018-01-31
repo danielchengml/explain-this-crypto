@@ -27,16 +27,6 @@ This application will perform the following functions:
 #### Proposed Tools
 
 
-
-
-
-
-| ID| User Stories  |Behaviour      |
-|---| ------------- |:-------------:|
-| 1 | col 3 is      | right-aligned |
-| 2 | col 2 is      | centered      |
-| 3 | zebra stripes | are neat      |
-
 ## Future Development
 
 #### Expanding Functionality
