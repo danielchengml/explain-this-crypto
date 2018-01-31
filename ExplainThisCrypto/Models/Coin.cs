@@ -18,7 +18,7 @@ namespace ExplainThisCrypto.Models
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<Description> Descriptions { get; set; }
 
-        public Coin(string name, string symbol, string logo_url)
+        public Coin(string name, string symbol, string logo_url, int userId)
         {
             Name = name;
             Symbol = symbol;

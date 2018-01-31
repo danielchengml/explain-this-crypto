@@ -25,6 +25,11 @@
                 <span asp-validation-for="Author" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="CoinId" class="control-label"></label>
+                <select asp-for="CoinId" class="form-control" asp-items="ViewBag.CoinId"></select>
+                <span asp-validation-for="CoinId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>

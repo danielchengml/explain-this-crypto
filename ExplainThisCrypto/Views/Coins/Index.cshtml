@@ -19,7 +19,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Symbol)
                 </th>
-                <th>
+                <th style="text-align:center">
                     @Html.DisplayNameFor(model => model.Logo_url)
                 </th>
             <th></th>
@@ -34,8 +34,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Symbol)
             </td>
-            <td>
-                <img src="@Html.DisplayFor(modelItem => item.Logo_url)" style="max-width:100px;"/> 
+            <td style="text-align:center">
+                <img src="@Html.DisplayFor(modelItem => item.Logo_url)" style="max-width:100px; max-height:100px;"/> 
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CoinId">Edit</a> |

@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace ExplainThisCrypto.Data.Migrations
+namespace ExplainThisCrypto.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180130221542_Initial")]
+    [Migration("20180131163111_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,11 +82,13 @@ namespace ExplainThisCrypto.Data.Migrations
 
                     b.Property<string>("Symbol");
 
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserId1");
 
                     b.HasKey("CoinId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Coins");
                 });
@@ -98,17 +100,19 @@ namespace ExplainThisCrypto.Data.Migrations
 
                     b.Property<string>("Author");
 
-                    b.Property<int?>("CoinsCoinId");
+                    b.Property<int>("CoinId");
 
                     b.Property<string>("Content");
 
-                    b.Property<string>("UserId");
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserId1");
 
                     b.HasKey("DescriptionId");
 
-                    b.HasIndex("CoinsCoinId");
+                    b.HasIndex("CoinId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Descriptions");
                 });
@@ -224,18 +228,19 @@ namespace ExplainThisCrypto.Data.Migrations
                 {
                     b.HasOne("ExplainThisCrypto.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("ExplainThisCrypto.Models.Description", b =>
                 {
                     b.HasOne("ExplainThisCrypto.Models.Coin", "Coins")
                         .WithMany("Descriptions")
-                        .HasForeignKey("CoinsCoinId");
+                        .HasForeignKey("CoinId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ExplainThisCrypto.Models.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
