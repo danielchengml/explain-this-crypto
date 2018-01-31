@@ -18,8 +18,6 @@ namespace ExplainThisCrypto.Data
         public virtual DbSet<Coin> Coins { get; set; }
         public virtual DbSet<Description> Descriptions { get; set; }
 
-
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

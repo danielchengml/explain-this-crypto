@@ -8,12 +8,13 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace ExplainThisCrypto.Data.Migrations
+namespace ExplainThisCrypto.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180131164123_updateTable")]
+    partial class updateTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,7 +98,7 @@ namespace ExplainThisCrypto.Data.Migrations
 
                     b.Property<string>("Author");
 
-                    b.Property<int?>("CoinsCoinId");
+                    b.Property<int>("CoinId");
 
                     b.Property<string>("Content");
 
@@ -105,7 +106,7 @@ namespace ExplainThisCrypto.Data.Migrations
 
                     b.HasKey("DescriptionId");
 
-                    b.HasIndex("CoinsCoinId");
+                    b.HasIndex("CoinId");
 
                     b.HasIndex("UserId");
 
@@ -230,7 +231,8 @@ namespace ExplainThisCrypto.Data.Migrations
                 {
                     b.HasOne("ExplainThisCrypto.Models.Coin", "Coins")
                         .WithMany("Descriptions")
-                        .HasForeignKey("CoinsCoinId");
+                        .HasForeignKey("CoinId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ExplainThisCrypto.Models.ApplicationUser", "User")
                         .WithMany()

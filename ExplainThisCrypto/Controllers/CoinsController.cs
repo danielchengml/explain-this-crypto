@@ -7,15 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ExplainThisCrypto.Data;
 using ExplainThisCrypto.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExplainThisCrypto.Controllers
 {
+    [Authorize]
     public class CoinsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CoinsController(ApplicationDbContext context)
+        public CoinsController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -58,6 +63,8 @@ namespace ExplainThisCrypto.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
+                coin.User = user;
                 _context.Add(coin);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

@@ -7,23 +7,28 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ExplainThisCrypto.Data;
 using ExplainThisCrypto.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ExplainThisCrypto.Controllers
 {
+    [Authorize]
     public class DescriptionsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public DescriptionsController(ApplicationDbContext context)
+        public DescriptionsController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
+            _userManager = userManager;
             _context = context;
         }
 
         // GET: Descriptions
         public async Task<IActionResult> Index()
         {
-            
-            return View(await _context.Descriptions.ToListAsync());
+            var applicationDbContext = _context.Descriptions.Include(d => d.Coins);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Descriptions/Details/5
@@ -35,6 +40,7 @@ namespace ExplainThisCrypto.Controllers
             }
 
             var description = await _context.Descriptions
+                .Include(d => d.Coins)
                 .SingleOrDefaultAsync(m => m.DescriptionId == id);
             if (description == null)
             {
@@ -47,7 +53,7 @@ namespace ExplainThisCrypto.Controllers
         // GET: Descriptions/Create
         public IActionResult Create()
         {
-            ViewBag.Coins = new SelectList(_context.Coins.ToList(), "CoinId", "Symbol");
+            ViewData["CoinId"] = new SelectList(_context.Coins, "CoinId", "Name");
             return View();
         }
 
@@ -56,14 +62,18 @@ namespace ExplainThisCrypto.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DescriptionId,Content,Author")] Description description)
+        public async Task<IActionResult> Create([Bind("DescriptionId,Content,Author,CoinId")] Description description)
         {
             if (ModelState.IsValid)
             {
+
+                var user = await _userManager.GetUserAsync(User);
+                description.User = user;
                 _context.Add(description);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CoinId"] = new SelectList(_context.Coins, "CoinId", "CoinId", description.CoinId);
             return View(description);
         }
 
@@ -80,6 +90,7 @@ namespace ExplainThisCrypto.Controllers
             {
                 return NotFound();
             }
+            ViewData["CoinId"] = new SelectList(_context.Coins, "CoinId", "CoinId", description.CoinId);
             return View(description);
         }
 
@@ -88,7 +99,7 @@ namespace ExplainThisCrypto.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DescriptionId,Content,Author")] Description description)
+        public async Task<IActionResult> Edit(int id, [Bind("DescriptionId,Content,Author,CoinId")] Description description)
         {
             if (id != description.DescriptionId)
             {
@@ -115,6 +126,7 @@ namespace ExplainThisCrypto.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["CoinId"] = new SelectList(_context.Coins, "CoinId", "CoinId", description.CoinId);
             return View(description);
         }
 
@@ -127,6 +139,7 @@ namespace ExplainThisCrypto.Controllers
             }
 
             var description = await _context.Descriptions
+                .Include(d => d.Coins)
                 .SingleOrDefaultAsync(m => m.DescriptionId == id);
             if (description == null)
             {
@@ -151,5 +164,7 @@ namespace ExplainThisCrypto.Controllers
         {
             return _context.Descriptions.Any(e => e.DescriptionId == id);
         }
+
+
     }
 }
