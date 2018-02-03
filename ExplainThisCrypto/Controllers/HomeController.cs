@@ -43,7 +43,7 @@ namespace ExplainThisCrypto.Controllers
 
         public IActionResult GetFeaturedCoins()
         {
-            var FeaturedCoinsList = _context.Coins.OrderBy(r => Guid.NewGuid()).Take(4);
+            var FeaturedCoinsList = _context.Coins.OrderBy(r => Guid.NewGuid()).Take(4).ToList();
             return Json(FeaturedCoinsList);
         }
 
