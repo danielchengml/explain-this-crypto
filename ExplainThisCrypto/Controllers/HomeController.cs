@@ -41,6 +41,12 @@ namespace ExplainThisCrypto.Controllers
             return View();
         }
 
+        public IActionResult GetFeaturedCoins()
+        {
+            var FeaturedCoinsList = _context.Coins.OrderBy(r => Guid.NewGuid()).Take(4);
+            return Json(FeaturedCoinsList);
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
