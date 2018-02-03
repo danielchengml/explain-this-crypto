@@ -15,14 +15,18 @@ namespace ExplainThisCrypto.Models
         public string Name { get; set; }
         public string Symbol { get; set; }
         public string Logo_url { get; set; }
+        public string Tagline { get; set; }
+        public string Website { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<Description> Descriptions { get; set; }
 
-        public Coin(string name, string symbol, string logo_url, int userId)
+        public Coin(string name, string symbol, string logo_url, string tagline, string website, int userId)
         {
             Name = name;
             Symbol = symbol;
             Logo_url = logo_url;
+            Tagline = tagline;
+            Website = website;
         }
 
         public Coin()

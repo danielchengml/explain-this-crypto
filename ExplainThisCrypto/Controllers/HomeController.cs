@@ -22,7 +22,7 @@ namespace ExplainThisCrypto.Controllers
         public IActionResult Index()
         {
             var coins = _context.Coins
-                               .Include(x => x.Descriptions)
+                               .Include(x => x.Descriptions).Take(10)
                                .ToList();
             return View(coins);
         }
