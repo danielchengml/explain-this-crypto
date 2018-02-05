@@ -1,0 +1,28 @@
+﻿@model ExplainThisCrypto.Models.Coin
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-2">
+            <img src="@Html.DisplayFor(x => Model.Logo_url)" style="max-width:100px; max-height:100px" />
+        </div>
+        <div class="col-md-8">
+            <h3><strong>@Html.DisplayFor(x => Model.Name)</strong><em> || @Html.DisplayFor(x => Model.Symbol) </em></h3>
+            <h4>@Html.DisplayFor(x => Model.Tagline)</h4>
+            <h4><a href="@Html.DisplayFor(x => Model.Website)">@Html.DisplayFor(x => Model.Website)</a></h4>
+        </div>
+    </div>
+</div>
+
+@foreach (var description in Model.Descriptions)
+{
+    <div class="well">
+        <h3>@Html.DisplayFor(x=> description.Content)</h3>
+        <p><em><strong>@Html.DisplayFor(x => description.Author)</strong></em></p>
+    </div>
+}
+

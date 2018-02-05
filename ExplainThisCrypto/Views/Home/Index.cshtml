@@ -24,7 +24,7 @@
                     var active = "active";
 
                     for (var coin = 0; coin < 4; coin++) {
-                        stringResult += "<div class='item " + active + "' style='background-color: grey;'><img src=" + result[coin].logo_url + " alt=" + result[coin].name + "Logo' class='img-responsive' style='max-height:200px;' /> <div class='carousel-caption' role='option'> <h3>" + result[coin].name + " || <em>" + result[coin].symbol + "</em></h3><p>" + result[coin].tagline + " <a class='btn btn-default' href='" + result[coin].website + "'>Learn More </a></p></div></div>"
+                        stringResult += "<div class='item " + active + "' style='background-color: grey;'><img src=" + result[coin].logo_url + " alt=" + result[coin].name + "Logo' class='img-responsive' style='max-height:200px;' /> <div class='carousel-caption' role='option'> <h3>" + result[coin].name + " || <em>" + result[coin].symbol + "</em></h3><p>" + result[coin].tagline + " <a class='btn btn-default' href='" + result[coin].website + " '  target='_blank'>Learn More </a></p></div></div>"
 
                         active = "";
                     }
@@ -57,10 +57,10 @@
                 <img src="@Html.DisplayFor(x => coin.Logo_url)" style="max-width:100px; max-height:100px" />
             </div>
             <div class="col-md-8">
-                <h3><strong>@Html.DisplayFor(x => coin.Name) </strong><em>|| @Html.DisplayFor(x => coin.Symbol) </em></h3>
+                <h3><strong>@Html.DisplayFor(x => coin.Name)</strong><em> || @Html.DisplayFor(x => coin.Symbol) </em></h3>
                 <h4>@Html.DisplayFor(x => coin.Tagline)</h4>
+                <a asp-action="Details" asp-route-id="@coin.CoinId">Descriptions</a> 
             </div>
-
         </div>
     </div>
 }

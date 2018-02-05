@@ -47,6 +47,24 @@ namespace ExplainThisCrypto.Controllers
             return Json(FeaturedCoinsList);
         }
 
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var coin = await _context.Coins
+                .Include(m => m.Descriptions)
+                .SingleOrDefaultAsync(m => m.CoinId == id);
+            if (coin == null)
+            {
+                return NotFound();
+            }
+
+            return View(coin);
+        }
+
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
