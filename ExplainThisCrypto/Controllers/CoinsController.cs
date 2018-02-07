@@ -30,6 +30,12 @@ namespace ExplainThisCrypto.Controllers
             return View(await _context.Coins.ToListAsync());
         }
 
+        public List<string> Search(string name)
+        {
+            return _context.Coins.Where(p => p.Name.StartsWith(name, 
+                StringComparison.OrdinalIgnoreCase)).Select(p => p.Name).ToList();
+        }
+
         // GET: Coins/Details/5
         public async Task<IActionResult> Details(int? id)
         {
