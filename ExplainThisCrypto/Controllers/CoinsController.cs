@@ -37,15 +37,15 @@ namespace ExplainThisCrypto.Controllers
         }
 
         // GET: Coins/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string name)
         {
-            if (id == null)
+            if (name == null)
             {
                 return NotFound();
             }
 
             var coin = await _context.Coins
-                .SingleOrDefaultAsync(m => m.CoinId == id);
+                .SingleOrDefaultAsync(m => m.Name == name);
             if (coin == null)
             {
                 return NotFound();

@@ -52,6 +52,7 @@ namespace ExplainThisCrypto.Controllers
         {
             if (name == null)
             {
+                Console.WriteLine("null value");
                 return NotFound();
             }
 
@@ -60,6 +61,7 @@ namespace ExplainThisCrypto.Controllers
                 .SingleOrDefaultAsync(m => m.Name == name);
             if (coin == null)
             {
+                Console.WriteLine("null value again");
                 return NotFound();
             }
 

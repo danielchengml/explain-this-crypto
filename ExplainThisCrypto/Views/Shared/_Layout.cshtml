@@ -43,10 +43,11 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ExplainThisCrypto</a>
             </div>
             <div class="navbar-left navbar-collapse collapse" style="margin-top:12px;">
-            @using (Html.BeginForm("Details", "Home", FormMethod.Post))
+            @using (Html.BeginForm("Details", "Home", FormMethod.Get))
             {
                 <div class="nav navbar-nav">
-                   <input type="text" id="coinName" name="name" placeholder="Search Coins" class="form-control"/>
+                   <input type="text" id="name" name="name" placeholder="Search Coins" class="form-control"/>
+
                 </div>
             }
             </div>
