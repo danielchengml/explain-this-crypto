@@ -17,7 +17,35 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#SearchBar').click(function(event) {
+                $('#myDropdown').toggle();
+                $.ajax({
+                    url: '@Url.Action("GetCoinList")',
+                    type: 'GET',
+                    data: $(this).serialize(),
+                    dataType: 'json',
+                    success: function (result) {
+                    var stringResult = '';
+                    for (var i = 0; i < result.length; i++) {
+                        stringResult += '<a asp-area="" asp-controller="Home" asp-action="Details" asp-route-name="' + result[i].name + '">' + result[i].name + " (" + result[i].symbol + ") </a><br>";
+                    }
 
+                    console.log(result);
+                    $('#coinList').html(stringResult);
+                    }
+                });
+            });
+
+            $("#coinInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#coinList a").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 
 </head>
 <body>
@@ -33,13 +61,18 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">ExplainThisCrypto</a>
             </div>
             <div class="navbar-left navbar-collapse collapse" style="margin-top:9px;">
-                @using (Html.BeginForm("Details", "Home", FormMethod.Get))
-                {
-                    <div class="nav navbar-nav">
-                        <input type="text" id="name" name="name" placeholder="Search Coins" class="form-control" />
 
+                <div class="nav navbar-nav">
+                    <div class="dropdown">
+                        <button id="SearchBar" name="name" class="form-control">Search Coins</button>
+                        <div id="myDropdown" class="dropdown-content" style="display:none;">
+                            <input type="text" placeholder="Coin Name" class="form-control" id="coinInput" />
+                            <div id="coinList"></div>
+                        </div>
                     </div>
-                }
+
+                </div>
+
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">

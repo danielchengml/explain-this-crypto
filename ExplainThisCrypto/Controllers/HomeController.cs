@@ -26,6 +26,16 @@ namespace ExplainThisCrypto.Controllers
                                .ToList();
             return View(coins);
         }
+        
+        public IActionResult GetCoinList()
+        {
+            var coinNameList = _context.Coins
+                                        .Select(c => new MiniCoin { Name = c.Name, Symbol = c.Symbol })
+                                        .ToList();
+
+            return Json(coinNameList);
+        }
+
 
         public IActionResult About()
         {
