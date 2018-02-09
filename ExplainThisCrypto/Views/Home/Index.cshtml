@@ -20,7 +20,7 @@
                 success: function (result) {
                     console.log(result);
 
-                    var stringResult = "<div id='myCarousel' class='carousel slide ' data-ride='carousel' data-interval='6000'><ol class='carousel-indicators' ><li data-target='#myCarousel' data-slide-to='0' class='active'></li><li data-target='#myCarousel' data-slide-to='1'></li><li data-target='#myCarousel' data-slide-to='2'></li><li data-target='#myCarousel' data-slide-to='3'></li></ol ><div class='carousel-inner' role='listbox'>";
+                    var stringResult = "<div id='myCarousel' class='carousel slide ' data-ride='carousel' data-interval='4000'><ol class='carousel-indicators' ><li data-target='#myCarousel' data-slide-to='0' class='active'></li><li data-target='#myCarousel' data-slide-to='1'></li><li data-target='#myCarousel' data-slide-to='2'></li><li data-target='#myCarousel' data-slide-to='3'></li></ol ><div class='carousel-inner' role='listbox'>";
 
                     var active = "active";
 
@@ -60,7 +60,7 @@
             <div class="col-md-8">
                 <h3><strong>@Html.DisplayFor(x => coin.Name)</strong><em> || @Html.DisplayFor(x => coin.Symbol) </em></h3>
                 <h4>@Html.DisplayFor(x => coin.Tagline)</h4>
-                <a asp-action="Details" asp-route-id="@coin.CoinId">Descriptions</a>
+                <a asp-action="Details" asp-route-name="@coin.Name">Descriptions</a>
             </div>
         </div>
     </div>

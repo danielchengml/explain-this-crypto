@@ -47,16 +47,17 @@ namespace ExplainThisCrypto.Controllers
             return Json(FeaturedCoinsList);
         }
 
-        public async Task<IActionResult> Details(int? id)
+
+        public async Task<IActionResult> Details(string name)
         {
-            if (id == null)
+            if (name == null)
             {
                 return NotFound();
             }
 
             var coin = await _context.Coins
                 .Include(m => m.Descriptions)
-                .SingleOrDefaultAsync(m => m.CoinId == id);
+                .SingleOrDefaultAsync(m => m.Name == name);
             if (coin == null)
             {
                 return NotFound();
