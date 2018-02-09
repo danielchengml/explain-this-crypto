@@ -4,9 +4,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"></script>
-
-
 <script type="text/javascript">
     $(document).ready(function () {
         $("#featuredCoins").submit(function (event) {
@@ -20,7 +17,7 @@
                 success: function (result) {
                     console.log(result);
 
-                    var stringResult = "<div id='myCarousel' class='carousel slide ' data-ride='carousel' data-interval='4000'><ol class='carousel-indicators' ><li data-target='#myCarousel' data-slide-to='0' class='active'></li><li data-target='#myCarousel' data-slide-to='1'></li><li data-target='#myCarousel' data-slide-to='2'></li><li data-target='#myCarousel' data-slide-to='3'></li></ol ><div class='carousel-inner' role='listbox'>";
+                    var stringResult = "<div id='myCarousel' class='carousel slide ' data-interval='4000'><ol class='carousel-indicators' ><li data-target='#myCarousel' data-slide-to='0' class='active'></li><li data-target='#myCarousel' data-slide-to='1'></li><li data-target='#myCarousel' data-slide-to='2'></li><li data-target='#myCarousel' data-slide-to='3'></li></ol ><div class='carousel-inner' role='listbox'>";
 
                     var active = "active";
 
@@ -31,7 +28,7 @@
                     }
 
                     stringResult +=
-                        " </div> <a class='left carousel-control' href= '#myCarousel' role= 'button' data- slide='prev'><span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span><span class='sr-only'>Previous</span></a> <a class='right carousel-control' href='#myCarousel' role='button' data-slide='next'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><span class= 'sr-only'>Next</span></a></div >";
+                        " </div> <a class='left carousel-control' href= '#myCarousel' role= 'button' data-ride='carousel' data-slide='prev'><span class='glyphicon glyphicon-chevron-left' aria-hidden='true'></span><span class='sr-only'>Previous</span></a> <a class='right carousel-control' href='#myCarousel' role='button' data-slide='next'><span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span><span class= 'sr-only'>Next</span></a></div >";
 
                     $("#FeaturedCoins").html(stringResult);
                 }
@@ -40,6 +37,12 @@
 
         });
         $("#featuredCoins").submit();
+        $('.carousel').carousel({
+            interval: 3100,
+            pause: null
+        });
+
+        $('.carousel').carousel('cycle');
     });
 </script>
 
