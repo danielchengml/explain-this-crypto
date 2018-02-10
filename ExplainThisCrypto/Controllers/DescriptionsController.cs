@@ -28,6 +28,7 @@ namespace ExplainThisCrypto.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Descriptions.Include(d => d.Coins);
+
             return View(await applicationDbContext.ToListAsync());
         }
 

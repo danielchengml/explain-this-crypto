@@ -25,9 +25,17 @@ namespace ExplainThisCrypto.Controllers
         }
 
         // GET: Coins
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Coins.ToListAsync());
+
+            var coins = from c in _context.Coins select c;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                coins = coins.Where(x => x.Name.Contains(searchString));
+            }
+
+            return View(await coins.ToListAsync());
         }
 
         public List<string> Search(string name)
