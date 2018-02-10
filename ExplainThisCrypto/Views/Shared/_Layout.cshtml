@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 
     </environment>
     <environment exclude="Development">
@@ -20,7 +21,6 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#SearchBar').click(function(event) {
-                $('#myDropdown').toggle();
                 $.ajax({
                     url: '@Url.Action("GetCoinList")',
                     type: 'GET',
@@ -29,7 +29,7 @@
                     success: function (result) {
                     var stringResult = '';
                     for (var i = 0; i < result.length; i++) {
-                        stringResult += '<a asp-area="" asp-controller="Home" asp-action="Details" asp-route-name="' + result[i].name + '">' + result[i].name + " (" + result[i].symbol + ") </a><br>";
+                        stringResult += '<option value="' + result[i].name + '" style="color:white">' + result[i].name + " (" + result[i].symbol + ") </option>";
                     }
 
                     console.log(result);
@@ -44,6 +44,8 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
+
+
         });
     </script>
 
@@ -63,17 +65,15 @@
             <div class="navbar-left navbar-collapse collapse" style="margin-top:9px;">
 
                 <div class="nav navbar-nav">
-                    <div class="dropdown">
-                        <button id="SearchBar" name="name" class="form-control">Search Coins</button>
-                        <div id="myDropdown" class="dropdown-content" style="display:none;">
-                            <input type="text" placeholder="Coin Name" class="form-control" id="coinInput" />
-                            <div id="coinList"></div>
-                        </div>
-                    </div>
+                    <form id="SearchBar" asp-controller="Home" asp-action="Details" method="get" class="form-group">
+                        <input onchange="this.form.submit()" list="coinList" name="name" class="form-control" placeholder="Search Coins" />
+                        <datalist id="coinList"></datalist>
+                    </form>
+                    
+                </div>
 
                 </div>
 
-            </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
