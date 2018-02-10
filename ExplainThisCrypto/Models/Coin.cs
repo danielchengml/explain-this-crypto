@@ -16,6 +16,7 @@ namespace ExplainThisCrypto.Models
         public string Symbol { get; set; }
         public string Logo_url { get; set; }
         public string Tagline { get; set; }
+        public string Description { get; set; }
         public string Website { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<Description> Descriptions { get; set; }

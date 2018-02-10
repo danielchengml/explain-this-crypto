@@ -55,12 +55,13 @@
     <div class="well">
         <div class="row">
             <div class="col-sm-2" style="text-align:center">
-                <img src="@Html.DisplayFor(x => coin.Logo_url)" style="max-width:100px; max-height:100px" />
+                <img src="@Html.DisplayFor(x => coin.Logo_url)" style="max-width:100px; max-height:100px; margin-top:15px;" />
             </div>
             <div class="col-sm-10">
                 <h3><strong>@Html.DisplayFor(x => coin.Name)</strong><em> || @Html.DisplayFor(x => coin.Symbol) </em></h3>
-                <h4>@Html.DisplayFor(x => coin.Tagline)</h4>
-                <a asp-action="Details" asp-route-name="@coin.Name">Descriptions</a>
+                <h4><strong>@Html.DisplayFor(x => coin.Tagline)</strong></h4>
+                <h4 style="font-size:13px;">@Html.DisplayFor(x => coin.Description)</h4>
+                <a asp-action="Details" asp-route-name="@coin.Name" style="font-size:25px;">What People Say about @coin.Name ..</a>
             </div>
         </div>
     </div>

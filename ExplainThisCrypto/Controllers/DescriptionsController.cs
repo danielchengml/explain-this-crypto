@@ -90,7 +90,7 @@ namespace ExplainThisCrypto.Controllers
             {
                 return NotFound();
             }
-            ViewData["CoinId"] = new SelectList(_context.Coins, "CoinId", "CoinId", description.CoinId);
+            ViewData["CoinId"] = new SelectList(_context.Coins, "CoinId", "Name", description.CoinId);
             return View(description);
         }
 
@@ -126,7 +126,7 @@ namespace ExplainThisCrypto.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CoinId"] = new SelectList(_context.Coins, "CoinId", "CoinId", description.CoinId);
+            ViewData["CoinId"] = new SelectList(_context.Coins, "CoinId", "Name", description.CoinId);
             return View(description);
         }
 

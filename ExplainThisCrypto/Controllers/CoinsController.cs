@@ -37,15 +37,15 @@ namespace ExplainThisCrypto.Controllers
         }
 
         // GET: Coins/Details/5
-        public async Task<IActionResult> Details(string name)
+        public async Task<IActionResult> Details(int? id)
         {
-            if (name == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
             var coin = await _context.Coins
-                .SingleOrDefaultAsync(m => m.Name == name);
+                .SingleOrDefaultAsync(m => m.CoinId == id);
             if (coin == null)
             {
                 return NotFound();
@@ -65,7 +65,7 @@ namespace ExplainThisCrypto.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CoinId,Name,Symbol,Logo_url,Tagline,Website")] Coin coin)
+        public async Task<IActionResult> Create([Bind("CoinId,Name,Symbol,Logo_url,Tagline,Description,Website")] Coin coin)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace ExplainThisCrypto.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CoinId,Name,Symbol,Logo_url,Tagline,Website")] Coin coin)
+        public async Task<IActionResult> Edit(int id, [Bind("CoinId,Name,Symbol,Logo_url,Tagline,Description,Website")] Coin coin)
         {
             if (id != coin.CoinId)
             {
