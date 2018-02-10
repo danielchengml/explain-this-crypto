@@ -62,7 +62,7 @@ namespace ExplainThisCrypto.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DescriptionId,Content,Author,CoinId")] Description description)
+        public async Task<IActionResult> Create([Bind("DescriptionId,Content,Author,Source,CoinId")] Description description)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace ExplainThisCrypto.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DescriptionId,Content,Author,CoinId")] Description description)
+        public async Task<IActionResult> Edit(int id, [Bind("DescriptionId,Content,Author,Source,CoinId")] Description description)
         {
             if (id != description.DescriptionId)
             {

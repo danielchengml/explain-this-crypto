@@ -20,10 +20,10 @@
 
 @foreach (var description in Model.Descriptions)
 {
-    <div class="well">
+    <div class="well ">
         <h3>@Html.DisplayFor(x=> description.Content)</h3>
         <p><em><strong>@Html.DisplayFor(x => description.Author)</strong></em></p>
-        <a href="@Html.DisplayFor(x => description.Source)"><em>@Html.DisplayFor(x => description.Source)</em></a>
+        <a href="@Html.DisplayFor(x => description.Source)" target="_blank"><em>Source [Click Here]</em></a>
     </div>
 }
 
