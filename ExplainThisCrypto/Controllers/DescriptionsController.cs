@@ -25,11 +25,17 @@ namespace ExplainThisCrypto.Controllers
         }
 
         // GET: Descriptions
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            var applicationDbContext = _context.Descriptions.Include(d => d.Coins);
+            var descriptions = from d in _context.Descriptions.Include(x => x.Coins)
+                               select d;
 
-            return View(await applicationDbContext.ToListAsync());
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                descriptions = descriptions.Where(x => x.Coins.Name.Contains(searchString));
+            }
+
+            return View(await descriptions.ToListAsync());
         }
 
         // GET: Descriptions/Details/5
