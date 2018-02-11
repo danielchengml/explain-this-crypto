@@ -22,8 +22,9 @@ namespace ExplainThisCrypto.Controllers
         public IActionResult Index()
         {
             var coins = _context.Coins
-                               .Include(x => x.Descriptions).Take(10)
-                               .ToList();
+                               .Include(x => x.Descriptions)
+                               .ToList()
+                               .OrderBy(r => Guid.NewGuid());
             return View(coins);
         }
         
@@ -76,6 +77,13 @@ namespace ExplainThisCrypto.Controllers
             }
 
             return View(coin);
+        }
+
+        public IActionResult GetPrice(string symbol)
+        {
+            var coinPrice = Price.GetPrice(symbol);
+
+            return Json(coinPrice);
         }
 
         public IActionResult Error()
