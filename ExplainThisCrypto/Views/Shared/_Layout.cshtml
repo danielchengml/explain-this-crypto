@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 
     </environment>
     <environment exclude="Development">
@@ -45,7 +44,6 @@
                 });
             });
 
-
         });
     </script>
 
@@ -65,7 +63,7 @@
             <div class="navbar-left navbar-collapse collapse" style="margin-top:9px;">
 
                 <div class="nav navbar-nav">
-                    <form id="SearchBar" asp-controller="Home" asp-action="Details" method="get" class="form-group">
+                    <form id="SearchBar" asp-controller="Home" asp-action="Details" method="get">
                         <input onchange="this.form.submit()" list="coinList" name="name" class="form-control" placeholder="Search Coins" />
                         <datalist id="coinList"></datalist>
                     </form>
