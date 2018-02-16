@@ -31,7 +31,7 @@ namespace ExplainThisCrypto.Models
                 response = await GetResponseContentAsync(client, request) as RestResponse;
             }).Wait();
             JObject jsonResponse = JsonConvert.DeserializeObject<JObject>(response.Content);
-            var CoinPrice = JsonConvert.DeserializeObject<Price>(jsonResponse["price"].ToString());
+            var CoinPrice = JsonConvert.DeserializeObject<Price>(jsonResponse.ToString());
             return CoinPrice;
         }
 

@@ -4,6 +4,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $("#featuredCoins").submit(function (event) {
@@ -21,9 +23,9 @@
 
                     var active = "active";
 
-                    for (var coin = 0; coin < 10; coin++) {
+                    for (var coin = 0; coin < 6; coin++) {
                         stringResult += "<div class='item " + active + "' style='background-color: grey;'><img src=" + result[coin].logo_url + " alt=" + result[coin].name + "Logo' class='img-responsive' style='max-height:230px;' /> <div class='carousel-caption' role='option'> <h3>" + result[coin].name + " || <em>" + result[coin].symbol + "</em></h3><p>" + result[coin].tagline + " <br><br><a class='btn btn-info' href='/Home/Details?name=" + result[coin].name +"'>Descriptions</a>   <a class='btn btn-default' href='" + result[coin].website + " '  target='_blank'>Website </a></p></div></div>"
-                        
+
                         active = "";
                     }
 
@@ -41,9 +43,7 @@
     });
 </script>
 
-<form id="featuredCoins">
-
-</form>
+<form id="featuredCoins"></form>
 
 <div id="FeaturedCoins" style="margin-top:30px;">
 

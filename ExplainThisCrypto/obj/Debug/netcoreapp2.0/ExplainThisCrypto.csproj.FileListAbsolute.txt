@@ -9,3 +9,4 @@ C:\Users\User\Desktop\Epicodus\ExplainThisCrypto\ExplainThisCrypto\obj\Debug\net
 C:\Users\User\Desktop\Epicodus\ExplainThisCrypto\ExplainThisCrypto\bin\Debug\netcoreapp2.0\ExplainThisCrypto.pdb
 C:\Users\User\Desktop\Epicodus\ExplainThisCrypto\ExplainThisCrypto\obj\Debug\netcoreapp2.0\ExplainThisCrypto.dll
 C:\Users\User\Desktop\Epicodus\ExplainThisCrypto\ExplainThisCrypto\obj\Debug\netcoreapp2.0\ExplainThisCrypto.pdb
+C:\Users\User\Desktop\Epicodus\ExplainThisCrypto\ExplainThisCrypto\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs

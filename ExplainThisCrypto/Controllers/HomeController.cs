@@ -81,8 +81,9 @@ namespace ExplainThisCrypto.Controllers
 
         public IActionResult GetPrice(string symbol)
         {
-            var coinPrice = Price.GetPrice(symbol);
+            Console.WriteLine("HelloTest");
 
+            var coinPrice = Price.GetPrice(symbol);
             return Json(coinPrice);
         }
 

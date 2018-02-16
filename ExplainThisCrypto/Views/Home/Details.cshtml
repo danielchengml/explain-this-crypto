@@ -7,21 +7,23 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $.ajax({
+        $("#GetPrice").submit(function() {
+            $.ajax({
                 type: 'GET',
-                data: Model.Symbol,
+                data: { symbol:"BTC" },
                 dataType: 'json',
-                url: '@Url.Action("GetPrices")',
+                url: '@Url.Action("GetPrice")',
                 success: function (result) {
-                  console.log(result);
-			      result.forEach(function(article) {
-                    $("#prices").append();
-			        })
+                    console.log(result);
                 }
-              });
+            });
+        });
 
     });
+
+    
 </script>
+
 
 <div class="jumbotron">
     <div class="row">
