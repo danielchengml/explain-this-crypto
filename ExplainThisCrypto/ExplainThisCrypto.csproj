@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-ExplainThisCrypto-D818071B-7A8C-443D-A8C2-BC184F4F1C05</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="appsettings.Development.json" />
+    <Content Remove="appsettings.json" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
