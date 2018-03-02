@@ -18,16 +18,20 @@ namespace ExplainThisCrypto.Models
         public string Tagline { get; set; }
         public string Description { get; set; }
         public string Website { get; set; }
+        public string TwitterWidgetId { get; set; }
         public virtual ApplicationUser User { get; set; }
         public virtual ICollection<Description> Descriptions { get; set; }
+        public List<Tag> Category { get; set; }
 
-        public Coin(string name, string symbol, string logo_url, string tagline, string website, int userId)
+        public Coin(string name, string symbol, string logo_url, string tagline, string website, List<Tag> category, string twitterWidgetId, int userId)
         {
             Name = name;
             Symbol = symbol;
             Logo_url = logo_url;
             Tagline = tagline;
             Website = website;
+            Category = category;
+            TwitterWidgetId = twitterWidgetId;
         }
 
         public Coin()

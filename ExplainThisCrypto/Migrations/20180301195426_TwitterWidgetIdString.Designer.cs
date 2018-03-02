@@ -11,8 +11,8 @@ using System;
 namespace ExplainThisCrypto.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180131164123_updateTable")]
-    partial class updateTable
+    [Migration("20180301195426_TwitterWidgetIdString")]
+    partial class TwitterWidgetIdString
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,10 +71,28 @@ namespace ExplainThisCrypto.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("ExplainThisCrypto.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("CategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("ExplainThisCrypto.Models.Coin", b =>
                 {
                     b.Property<int>("CoinId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
 
                     b.Property<string>("Logo_url");
 
@@ -82,7 +100,13 @@ namespace ExplainThisCrypto.Migrations
 
                     b.Property<string>("Symbol");
 
+                    b.Property<string>("Tagline");
+
+                    b.Property<string>("TwitterWidgetId");
+
                     b.Property<string>("UserId");
+
+                    b.Property<string>("Website");
 
                     b.HasKey("CoinId");
 
@@ -102,6 +126,8 @@ namespace ExplainThisCrypto.Migrations
 
                     b.Property<string>("Content");
 
+                    b.Property<string>("Source");
+
                     b.Property<string>("UserId");
 
                     b.HasKey("DescriptionId");
@@ -111,6 +137,19 @@ namespace ExplainThisCrypto.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Descriptions");
+                });
+
+            modelBuilder.Entity("ExplainThisCrypto.Models.Tag", b =>
+                {
+                    b.Property<int>("CoinId");
+
+                    b.Property<int>("CategoryId");
+
+                    b.HasKey("CoinId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Tag");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -220,6 +259,13 @@ namespace ExplainThisCrypto.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ExplainThisCrypto.Models.Category", b =>
+                {
+                    b.HasOne("ExplainThisCrypto.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("ExplainThisCrypto.Models.Coin", b =>
                 {
                     b.HasOne("ExplainThisCrypto.Models.ApplicationUser", "User")
@@ -237,6 +283,19 @@ namespace ExplainThisCrypto.Migrations
                     b.HasOne("ExplainThisCrypto.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("ExplainThisCrypto.Models.Tag", b =>
+                {
+                    b.HasOne("ExplainThisCrypto.Models.Category", "Category")
+                        .WithMany("Coin")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ExplainThisCrypto.Models.Coin", "Coin")
+                        .WithMany("Category")
+                        .HasForeignKey("CoinId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

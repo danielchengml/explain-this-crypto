@@ -1,0 +1,80 @@
+﻿@model ExplainThisCrypto.Models.Coin
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#AddCategoryBox').hide();
+        $('#category-search').select2();
+        $('#GetCategories').submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: '@Url.Action("GetCategoryList")',
+                type: 'GET',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function (result) {
+                    console.log("hello");
+                    for (var i = 0; i < result.length; i++) {
+                        $('#category-search').prepend($('<option value="' + result[i].categoryId + '">' + result[i].name + "</option>"));
+                    }
+                }
+            });
+        });
+
+        $('#GetCategories').submit();
+
+        $('#AddCategory').click(function (event) {
+            event.preventDefault();
+            $('#AddCategoryBox').toggle();
+        });
+
+        $('#NewCategory').submit(function(event) {
+            event.preventDefault();
+            console.log($(this).serialize());
+            $.ajax({
+                url: '@Url.Action("QuickAddCategory")',
+                type: 'POST',
+                dataType: 'json',
+                data: $(this).serialize(),
+                success: function (result) {
+			        $('#AddCategoryInput').val('');
+                    $('#GetCategories').submit();
+                }
+            });
+        });
+
+    });
+</script>
+
+<h3>Coin: @Html.DisplayFor(model => model.Name)</h3>
+
+<div class="row">
+    <div class="col-md-4">
+        <form action="AddCategory" method="post">
+                <input type="hidden" name="coinId" class="form-control" value="@Model.CoinId" />
+            <div class="form-group">
+                <label for="categoryId" class="control-label"></label>
+                <select name="categoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="AddCategoryBox" class="well">
+    <form action="QuickAddCategory" id="NewCategory">
+        <label for="name">Quick Add Category</label>
+        <input id="AddCategoryInput" class="form-control" name="name" placeholder="Enter Name..." />
+        <button style="margin-top: 10px;" class="btn btn-default">Add</button>
+    </form>
+</div>
+<button style="height:25px; margin-bottom:10px; padding-top: 2px; padding-right:5px; padding-left:5px;" id="AddCategory" class="btn btn-info">Add Categories</button>

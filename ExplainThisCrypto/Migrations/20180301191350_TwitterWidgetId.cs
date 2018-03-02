@@ -4,21 +4,22 @@ using System.Collections.Generic;
 
 namespace ExplainThisCrypto.Migrations
 {
-    public partial class SourceColumnDescriptions : Migration
+    public partial class TwitterWidgetId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Source",
-                table: "Descriptions",
-                nullable: true);
+            migrationBuilder.AddColumn<int>(
+                name: "TwitterWidgetId",
+                table: "Coins",
+                nullable: false,
+                defaultValue: 0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Source",
-                table: "Descriptions");
+                name: "TwitterWidgetId",
+                table: "Coins");
         }
     }
 }

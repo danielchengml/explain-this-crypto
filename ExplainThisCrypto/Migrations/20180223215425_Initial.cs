@@ -155,23 +155,45 @@ namespace ExplainThisCrypto.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    CategoryId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
+                    table.ForeignKey(
+                        name: "FK_Categories_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Coins",
                 columns: table => new
                 {
                     CoinId = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: true),
                     Logo_url = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Symbol = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true)
+                    Tagline = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true),
+                    Website = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Coins", x => x.CoinId);
                     table.ForeignKey(
-                        name: "FK_Coins_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Coins_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -186,8 +208,8 @@ namespace ExplainThisCrypto.Migrations
                     Author = table.Column<string>(nullable: true),
                     CoinId = table.Column<int>(nullable: false),
                     Content = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true)
+                    Source = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -199,11 +221,35 @@ namespace ExplainThisCrypto.Migrations
                         principalColumn: "CoinId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Descriptions_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Descriptions_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tag",
+                columns: table => new
+                {
+                    CoinId = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tag", x => new { x.CoinId, x.CategoryId });
+                    table.ForeignKey(
+                        name: "FK_Tag_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Tag_Coins_CoinId",
+                        column: x => x.CoinId,
+                        principalTable: "Coins",
+                        principalColumn: "CoinId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -244,9 +290,14 @@ namespace ExplainThisCrypto.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Coins_UserId1",
+                name: "IX_Categories_UserId",
+                table: "Categories",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Coins_UserId",
                 table: "Coins",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Descriptions_CoinId",
@@ -254,9 +305,14 @@ namespace ExplainThisCrypto.Migrations
                 column: "CoinId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Descriptions_UserId1",
+                name: "IX_Descriptions_UserId",
                 table: "Descriptions",
-                column: "UserId1");
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tag_CategoryId",
+                table: "Tag",
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -280,7 +336,13 @@ namespace ExplainThisCrypto.Migrations
                 name: "Descriptions");
 
             migrationBuilder.DropTable(
+                name: "Tag");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Coins");

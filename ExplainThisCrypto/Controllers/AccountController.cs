@@ -16,7 +16,7 @@ using ExplainThisCrypto.Services;
 
 namespace ExplainThisCrypto.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
@@ -25,7 +25,7 @@ namespace ExplainThisCrypto.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
 
-        private RoleManager<IdentityRole> RoleManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -37,7 +37,7 @@ namespace ExplainThisCrypto.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
-            RoleManager = roleManager;
+            _roleManager = roleManager;
             _logger = logger;
         }
 
@@ -228,14 +228,14 @@ namespace ExplainThisCrypto.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    if (!await RoleManager.RoleExistsAsync("Admin"))
+                    if (!await _roleManager.RoleExistsAsync("User"))
                     {
-                        var users = new IdentityRole("Admin");
-                        var res = await RoleManager.CreateAsync(users);
-                        if (res.Succeeded)
-                        {
-                            await _userManager.AddToRoleAsync(user, "Admin");
-                        }
+                       var users = new IdentityRole("User");
+                       var res = await _roleManager.CreateAsync(users);
+                       if (res.Succeeded)
+                       {
+                                await _userManager.AddToRoleAsync(user, "User");
+                       }
                     }
 
                    // _logger.LogInformation("User created a new account with password.");

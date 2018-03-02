@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ExplainThisCrypto.Models.Coin>
+
+@{
+    Layout = "";
+}
+
+<div class="card-columns">
+    @foreach (var coin in Model)
+    {
+        <div class="card text-center coin-card" style="width: 100%;">
+            <div class="card-body">
+                <div class="coin-logo">
+                    <img class="coin-img" src="@Html.DisplayFor(x => coin.Logo_url)" alt="@Html.DisplayFor(x => coin.Name) Logo">
+                </div>
+                <div class="coin-content">
+                    <h3 class="card-title"><strong>@Html.DisplayFor(x => coin.Name)</strong> ||<em>  @Html.DisplayFor(x => coin.Symbol) </em></h3>
+                    <h5 class="card-text">@Html.DisplayFor(x => coin.Tagline)</h5>
+                    <p class="card-text">@Html.DisplayFor(x => coin.Description)</p>
+                </div>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="/Home/Details?name=@Html.DisplayFor(x => coin.Name)" class="btn-description">Learn More</a>
+            </div>
+            <div class="card-footer text-muted">
+                @foreach (var category in coin.Category)
+                {
+                    <a class="btn" href="/Home/Category?name=@Html.DisplayFor(x => category.Category.Name)">@category.Category.Name</a>
+                }
+            </div>
+        </div>
+    }
+</div>

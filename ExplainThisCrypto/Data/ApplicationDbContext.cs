@@ -18,18 +18,33 @@ namespace ExplainThisCrypto.Data
 
         public virtual DbSet<Coin> Coins { get; set; }
         public virtual DbSet<Description> Descriptions { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
+
+            builder.Entity<Tag>()
+                .HasKey(t => new { t.CoinId, t.CategoryId });
+
+            builder.Entity<Tag>()
+                .HasOne(p => p.Coin)
+                .WithMany(p => p.Category)
+                .HasForeignKey(y => y.CoinId);
+
+            builder.Entity<Tag>()
+                .HasOne(p => p.Category)
+                .WithMany(p => p.Coin)
+                .HasForeignKey(y => y.CategoryId);
         }
+
+            
 
         internal IIncludableQueryable<Description, Coin> Where(Func<object, object> p)
         {
             throw new NotImplementedException();
         }
+
+        public DbSet<ExplainThisCrypto.Models.Tag> Tag { get; set; }
     }
 }

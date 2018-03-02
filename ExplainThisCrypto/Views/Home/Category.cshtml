@@ -1,0 +1,42 @@
+﻿@model ExplainThisCrypto.Models.Category
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"></script>
+
+<div class="card category-card">
+    <div class="category-header">
+        <h1>@Html.DisplayFor(x => Model.Name)</h1>
+        <p>Cryptocurrencies</p>
+    </div>
+
+</div>
+
+<div class="card-columns">
+    @foreach (var coin in Model.Coin)
+    {
+        <div class="card text-center coin-card" style="width: 100%;">
+            <div class="card-body">
+                <div class="col-sm-3 coin-logo">
+                    <img class="coin-img" src="@Html.DisplayFor(x => coin.Coin.Logo_url)" alt="@Html.DisplayFor(x => coin.Coin.Name) Logo">
+                </div>
+                <div class="col-sm-9 coin-content">
+                    <h3 class="card-title"><strong>@Html.DisplayFor(x => coin.Coin.Name)</strong><em> || @Html.DisplayFor(x => coin.Coin.Symbol) </em></h3>
+                    <h5 class="card-text"><strong>@Html.DisplayFor(x => coin.Coin.Tagline)</strong></h5>
+                    <p class="card-text">@Html.DisplayFor(x => coin.Coin.Description)</p>
+                </div>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="/Home/Details?name=@Html.DisplayFor(x => coin.Coin.Name)" class="btn-description">Learn More</a>
+            </div>
+            <div class="card-footer text-muted">
+                @foreach (var category in coin.Coin.Category)
+                {
+                    <a class="btn" href="/Home/Category?name=@Html.DisplayFor(x => category.Category.Name)">@category.Category.Name</a>
+                }
+            </div>
+        </div>
+    }
+</div>

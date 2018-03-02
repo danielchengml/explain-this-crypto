@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using ExplainThisCrypto.Models;
 using ExplainThisCrypto.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ExplainThisCrypto.Controllers
 {
@@ -22,21 +23,91 @@ namespace ExplainThisCrypto.Controllers
         public IActionResult Index()
         {
             var coins = _context.Coins
+                               .Include(x => x.Category)
+                               .ThenInclude(x => x.Category)
                                .Include(x => x.Descriptions)
-                               .ToList()
-                               .OrderBy(r => Guid.NewGuid());
+                               .ToList();
+
+            ViewData["CoinId"] = new SelectList(_context.Coins, "CoinId", "Name");
+            ViewData["CategoryId"] = new SelectList(_context.Categories.OrderBy(x => x.Name), "CategoryId", "Name");
+
             return View(coins);
         }
-        
-        public IActionResult GetCoinList()
+
+
+        public async Task<IActionResult> GetCoins()
         {
-            var coinNameList = _context.Coins
+            var coinList = await _context.Coins
+                                .Include(x => x.Descriptions)
+                                .Include(x => x.Category)
+                                .ThenInclude(x => x.Category)
+                                .OrderBy(x => x.Name)
+                                .ToListAsync();
+
+            return View(coinList);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetCoins(string name)
+        {
+            var coinList = await _context.Coins
+                                .Include(x => x.Descriptions)
+                                .Include(x => x.Category)
+                                .ThenInclude(x => x.Category)
+                                .Where(x => EF.Functions.Like(x.Name, "%"+name+"%"))
+                                .OrderBy(x => x.Name)
+                                .ToListAsync();
+
+            return View(coinList);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> GetCategoryCoins(int categoryId)
+        {
+            var coinList = await _context.Categories
+                                .Include(x => x.Coin)
+                                .ThenInclude(x => x.Coin)
+                                .ThenInclude(x => x.Category)
+                                .ThenInclude(x => x.Category)
+                                .SingleOrDefaultAsync(x => x.CategoryId == categoryId);
+
+            return View(coinList);
+        }
+
+        
+
+        public async Task<IActionResult> Category(string name)
+        {
+            var category = await _context.Categories
+                            .Include(x => x.Coin)
+                            .ThenInclude(x => x.Coin)
+                            .ThenInclude(x => x.Category)
+                            .ThenInclude(x => x.Category)
+                            .SingleOrDefaultAsync(x => x.Name == name);
+
+            return View(category);
+        }
+
+        public async Task<IActionResult> GetCoinList()
+        {
+            var coinNameList = await _context.Coins
                                         .Select(c => new MiniCoin { Name = c.Name, Symbol = c.Symbol })
-                                        .ToList();
+                                        .OrderBy(x => x.Name)
+                                        .ToListAsync();
 
             return Json(coinNameList);
         }
 
+        public IActionResult GetCategoryList()
+        {
+            var categoryNameList = _context.Categories
+                                        .Select(c => new Category { Name = c.Name })
+                                        .OrderBy(x => x.Name)
+                                        .ToList();
+
+            return Json(categoryNameList);
+        }
 
         public IActionResult About()
         {
@@ -54,10 +125,11 @@ namespace ExplainThisCrypto.Controllers
 
         public IActionResult GetFeaturedCoins()
         {
-            var FeaturedCoinsList = _context.Coins.ToList().OrderBy(r => Guid.NewGuid());
+            var FeaturedCoinsList = _context.Coins
+                .ToList()
+                .OrderBy(r => Guid.NewGuid());
             return Json(FeaturedCoinsList);
         }
-
 
         public async Task<IActionResult> Details(string name)
         {

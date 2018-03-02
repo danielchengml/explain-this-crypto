@@ -41,6 +41,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Website)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TwitterWidgetId)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -64,6 +67,9 @@
             </td>
             <td>
                 <a href="@Html.DisplayFor(modelItem => item.Website)" target="_blank">@Html.DisplayFor(modelItem => item.Website)</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TwitterWidgetId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CoinId">Edit</a> |

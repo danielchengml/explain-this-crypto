@@ -1,9 +1,19 @@
 ﻿@{
     ViewData["Title"] = "Contact";
 }
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
 
-<address>
-    <p><strong>Twitter:</strong> <a href="https://twitter.com/xthiscrypto">xthiscrypto</a></p><br />
+<div >
+    <h5><strong>Have a great suggestion or feedback? Please let us know:</strong></h5>
+    <form id="feedback" class="form-group" method="POST" action="https://formspree.io/explainthiscrypto@gmail.com">
+        <input class="form-control" type="email" name="email" placeholder="Your email">
+        <input class="form-control" type="tel" name="tel" placeholder="Your Phone">
+        <textarea class="form-control" name="message" placeholder="Your message"></textarea>
+        <button class="btn" type="submit">Send</button>
+    </form>
+</div>
+<hr />
+<h6><strong>Alternatively you can reach us at:</strong></h6>
+<address class="card">
+    <p><strong>Twitter:</strong> <a href="https://twitter.com/xthiscrypto" target="_blank"> xthiscrypto"</a></p>
+    <p><strong>Email:</strong> <a href="mailto:explainthiscrypto@gmail.com" target="_blank">explainthiscrypto@gmail.com</a></p>
 </address>

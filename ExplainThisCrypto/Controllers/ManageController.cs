@@ -16,7 +16,7 @@ using ExplainThisCrypto.Services;
 
 namespace ExplainThisCrypto.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Route("[controller]/[action]")]
     public class ManageController : Controller
     {

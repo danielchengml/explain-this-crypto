@@ -11,8 +11,8 @@ using System;
 namespace ExplainThisCrypto.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180217192217_Admin")]
-    partial class Admin
+    [Migration("20180223215425_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,6 +71,22 @@ namespace ExplainThisCrypto.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("ExplainThisCrypto.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("CategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("ExplainThisCrypto.Models.Coin", b =>
                 {
                     b.Property<int>("CoinId")
@@ -119,6 +135,19 @@ namespace ExplainThisCrypto.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Descriptions");
+                });
+
+            modelBuilder.Entity("ExplainThisCrypto.Models.Tag", b =>
+                {
+                    b.Property<int>("CoinId");
+
+                    b.Property<int>("CategoryId");
+
+                    b.HasKey("CoinId", "CategoryId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Tag");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -228,6 +257,13 @@ namespace ExplainThisCrypto.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ExplainThisCrypto.Models.Category", b =>
+                {
+                    b.HasOne("ExplainThisCrypto.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("ExplainThisCrypto.Models.Coin", b =>
                 {
                     b.HasOne("ExplainThisCrypto.Models.ApplicationUser", "User")
@@ -245,6 +281,19 @@ namespace ExplainThisCrypto.Migrations
                     b.HasOne("ExplainThisCrypto.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("ExplainThisCrypto.Models.Tag", b =>
+                {
+                    b.HasOne("ExplainThisCrypto.Models.Category", "Category")
+                        .WithMany("Coin")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ExplainThisCrypto.Models.Coin", "Coin")
+                        .WithMany("Category")
+                        .HasForeignKey("CoinId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

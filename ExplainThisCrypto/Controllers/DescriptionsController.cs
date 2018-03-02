@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ExplainThisCrypto.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class DescriptionsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -80,7 +80,7 @@ namespace ExplainThisCrypto.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CoinId"] = new SelectList(_context.Coins, "CoinId", "CoinId", description.CoinId);
+            ViewData["CoinId"] = new SelectList(_context.Coins, "CoinId", "Name", description.CoinId);
             return View(description);
         }
 
